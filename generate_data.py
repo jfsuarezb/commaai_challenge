@@ -1,4 +1,4 @@
-from utilities import Download_File
+from utilities import Download_File, Pair_Images_From_Video
 
 import os
 
@@ -21,7 +21,7 @@ def Generate_Trainning_Data():
 	if os.path.isdir(training_data_dir):
 		for f in os.listdir(training_data_dir):
 			os.remove(os.path.join(training_data_dir, f))
-	os.rmdir(training_data_dir)	
+		os.rmdir(training_data_dir)	
 	
 	print("Beginning Download")
 	os.mkdir(training_data_dir)
@@ -29,4 +29,20 @@ def Generate_Trainning_Data():
 	Download_File(training_text_link, training_data_dir, training_text_file)
 	print("Succesfully Downloaded trainning data")
 
-Generate_Trainning_Data()
+	print("Beginning Image Arrangement")
+
+	Img_Array = Pair_Images_From_Video(os.path.join(training_data_dir, training_mp4_file))
+
+	speed_values = []
+
+	print("Reading Speed values")
+
+	with open(os.path.join(training_data_dir, training_text_file), "r") as f:
+		speed_values = f.readlines()[1:]
+
+	data_array = []
+
+	for i in range(len(Img_Array)):
+		data_array.append([Img_Array[i], speed_values[i]])
+	
+	return data_array
