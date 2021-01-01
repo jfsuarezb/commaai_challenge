@@ -1,6 +1,14 @@
 import tensorflow as tf
 from tensorflow import keras
 
+#This is the definition of the model. It's
+#basically several convolutional layers
+#applied on two consecutive frames in order
+#to extract relevant features from each
+#and an LSTM network that reads the concatenated
+#vectors in order to finally compute the speed
+#at the given frame
+
 class Speed_Model(keras.Model):
     def __init__(self):
         super(Speed_Model, self).__init__()
