@@ -1,6 +1,6 @@
-from utilities import Download_File, Pair_Images_From_Video
-
+from utilities import Download_File, Pair_Images_From_Video, Resize_Paired_Images
 import os
+import numpy as np
 
 #Constants for training/testing data retrieval
 training_data_dir = "training_data"
@@ -38,11 +38,6 @@ def Generate_Trainning_Data():
 	print("Reading Speed values")
 
 	with open(os.path.join(training_data_dir, training_text_file), "r") as f:
-		speed_values = f.readlines()[1:]
+		speed_values = np.array(f.readlines()[1:]).astype("float32")
 
-	data_array = []
-
-	for i in range(len(Img_Array)):
-		data_array.append([Img_Array[i], speed_values[i]])
-	
-	return data_array
+	return Resize_Paired_Images(Img_Array), speed_values

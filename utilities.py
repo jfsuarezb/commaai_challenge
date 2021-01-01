@@ -1,6 +1,8 @@
 import requests
 import os
 import cv2
+import numpy as np
+from skimage.transform import rezise
 from matplotlib import pyplot as plt
 
 #Downloads files from internet
@@ -53,4 +55,8 @@ def Pair_Images_From_Video(path):
 			break
 		New_Img_Array.append([Img_Array[i], Img_Array[i+1]])
 
-	return New_Img_Array
+	return np.array(New_Img_Array)
+
+def Resize_Paired_Images(array):
+	print("Resize_Paired_Images: Resizing images to 255,255")
+	return [[resize(image_pair[0], (255,255)).astype("float32"), resize(image_pair[1], (255,255)).astype("float32")]for image_pair in array]
