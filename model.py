@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
+from sklearn.model_selection import train_test_split
 
 #This is the definition of the model. It's
 #basically several convolutional layers
@@ -42,3 +43,13 @@ class Speed_Model(keras.Model):
         )
 
         return self.recurrent_layer(recurrent_input)
+
+def Get_Trained_Model(X, Y):
+    print("Get_Trained_Model: Breaking data down into training and validation")
+    X_Train, X_Valid, Y_Train, Y_Valid = train_test_split(X, Y, test_size=0.2)
+    
+    print("Get_Trained_Model: Instantiating model, compiling, and fitting")
+    model = Speed_Model()
+    model.compile(loss="mean_squared_error", optimizer="adam", metrics=["accuracy"])
+    model.fit(X_Train, Y_Train, epochs=10, validation_data=(X_Valid, Y_Valid))
+    return model
