@@ -2,7 +2,7 @@ import requests
 import os
 import cv2
 import numpy as np
-from skimage.transform import rezise
+from skimage.transform import resize
 from matplotlib import pyplot as plt
 
 #Downloads files from internet
@@ -31,7 +31,7 @@ def Pair_Images_From_Video(path):
 		ret, frame = cap.read()
 		if ret == False:
 			break
-		cv2.imwrite(os.path.join(temp_dir, frame_file + str(i)))
+		cv2.imwrite(os.path.join(temp_dir, frame_file + str(i) + ".jpg"), frame)
 		i += 1
 
 	cap.release()
@@ -42,7 +42,7 @@ def Pair_Images_From_Video(path):
 	print("Pair_Images_From_Video: Reading images from files into array")
 	for i in range(len(os.listdir(temp_dir))):
 		Img_Array.append(plt.imread(os.path.join(temp_dir, frame_file + str(i))))
-		os.remove(os.path.join(temp_dir, frame_file + str(i)))
+		os.remove(os.path.join(temp_dir, frame_file + str(i) + ".jpg"))
 	
 	os.rmdir(temp_dir)
 
