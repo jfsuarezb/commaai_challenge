@@ -60,3 +60,10 @@ def Pair_Images_From_Video(path):
 def Resize_Paired_Images(array):
 	print("Resize_Paired_Images: Resizing images to 255,255")
 	return [[resize(image_pair[0], (255,255)).astype("float32"), resize(image_pair[1], (255,255)).astype("float32")]for image_pair in array]
+
+def Load_Sampled_Data(data):
+	sampled_data_dir = "testing_data"
+	sampled_data_file = "testing.txt"
+	with open(os.path.join(sampled_data_dir, sampled_data_file), "w") as data_file:
+		for data_point in data:
+			data_file.write("%s\n" % str(data))

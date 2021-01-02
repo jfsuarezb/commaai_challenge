@@ -41,3 +41,21 @@ def Generate_Trainning_Data():
 		speed_values = np.array(f.readlines()[1:]).astype("float32")
 
 	return Resize_Paired_Images(Img_Array), speed_values
+
+def Generate_Testing_Data():
+	print("Deleting old Data")
+	if os.path.isdir(testing_data_dir):
+		for f in os.listdir(testing_data_dir):
+			os.remove(os.path.join(testing_data_dir, f))
+		os.rmdir(testing_data_dir)
+
+	print("Beginning Download")
+	os.mkdir(testing_data_dir)
+	Download_File(testing_mp4_link, testing_data_dir, testing_mp4_file)
+	print("Succesfully Downloaded trainning data")
+
+	print("Beginning Image Arrangement")
+
+	Img_Array = Pair_Images_From_Video(os.path.join(testing_data_dir, testing_mp4_file))
+
+	return Resize_Paired_Images(Img_Array)
