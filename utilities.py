@@ -41,7 +41,7 @@ def Pair_Images_From_Video(path):
 
 	print("Pair_Images_From_Video: Reading images from files into array")
 	for i in range(len(os.listdir(temp_dir))):
-		Img_Array.append(plt.imread(os.path.join(temp_dir, frame_file + str(i))))
+		Img_Array.append(plt.imread(os.path.join(temp_dir, frame_file + str(i) + ".jpg")))
 		os.remove(os.path.join(temp_dir, frame_file + str(i) + ".jpg"))
 	
 	os.rmdir(temp_dir)
