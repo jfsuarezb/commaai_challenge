@@ -40,6 +40,11 @@ def Generate_Trainning_Data():
 	with open(os.path.join(training_data_dir, training_text_file), "r") as f:
 		speed_values = np.array(f.readlines()[1:]).astype("float32")
 
+	print("Deleting trainning files to free up space")
+	for f in os.listdir(training_data_dir):
+		os.remove(os.path.join(training_data_dir, f))
+	os.rmdir(training_data_dir)	
+
 	return Resize_Paired_Images(Img_Array), speed_values
 
 def Generate_Testing_Data():

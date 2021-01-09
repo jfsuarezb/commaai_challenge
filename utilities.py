@@ -24,36 +24,32 @@ def Pair_Images_From_Video(path):
 
 	print("Pair_Images_From_Video: Capturing video")
 	cap = cv2.VideoCapture(path)
+
+	Img_Array = []
 	
-	print("Pair_Images_From_Video: Reading frames into temp dir")
-	i = 0
+	print("Pair_Images_From_Video: Getting array representation from video frames")
 	while(cap.isOpened()):
 		ret, frame = cap.read()
 		if ret == False:
 			break
-		cv2.imwrite(os.path.join(temp_dir, frame_file + str(i) + ".jpg"), frame)
-		i += 1
+		cv2.imwrite(os.path.join(temp_dir, frame_file + ".jpg"), frame)
+		Img_Array.append(plt.imread(os.path.join(temp_dir, frame_file + ".jpg")))
+		os.remove(os.path.join(temp_dir, frame_file + ".jpg"))
 
 	cap.release()
 	cv2.destroyAllWindows()
-
-	Img_Array = []
-
-	print("Pair_Images_From_Video: Reading images from files into array")
-	for i in range(len(os.listdir(temp_dir))):
-		Img_Array.append(plt.imread(os.path.join(temp_dir, frame_file + str(i) + ".jpg")))
-		os.remove(os.path.join(temp_dir, frame_file + str(i) + ".jpg"))
 	
 	os.rmdir(temp_dir)
 
 	print("Pair_Images_From_Video: Reshaping array to pair images")
-	
 	New_Img_Array = []
 
 	for i in range(len(Img_Array)):
 		if i == len(Img_Array) - 1:
 			break
 		New_Img_Array.append([Img_Array[i], Img_Array[i+1]])
+
+	del Img_Array
 
 	return np.array(New_Img_Array)
 
